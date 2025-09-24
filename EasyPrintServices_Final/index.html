@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyPrint Services • Home</title>
+  <meta name="description" content="Upload your documents and get them printed fast, affordable, and hassle-free. Perfect for students!">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Header -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+
+      <!-- Hamburger Button -->
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>Print Smarter. Print Faster.</h1>
+      <p>Upload your documents and get them printed with ease — anytime, anywhere.</p>
+      <a href="order.html" class="btn btn-primary">Upload Now</a>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="card-grid">
+        <div class="card">
+          <i class="fa-solid fa-file-alt"></i>
+          <h3>Documents</h3>
+          <p>Print reports, assignments, and more in high quality.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-book"></i>
+          <h3>Binding</h3>
+          <p>Professional binding for projects and theses.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-id-card"></i>
+          <h3>Cards</h3>
+          <p>Custom student cards, business cards, and more.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-truck"></i>
+          <h3>Delivery</h3>
+          <p>Fast delivery right to your hostel or doorstep.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-file-lines"></i>
+          <h3>Flyers</h3>
+          <p>Eye-catching flyers for events and promotions.</p>
+        </div>
+        <div class="card">
+          <i class="fa-solid fa-image"></i>
+          <h3>Photos</h3>
+          <p>Sharp and colorful photo prints for every need.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 EasyPrint Services. All Rights Reserved.</p>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Script for Hamburger Menu -->
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
