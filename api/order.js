@@ -26,8 +26,8 @@ export default async function handler(req, res) {
         port: 587,
         secure: false,
         auth: {
-          user: process.env.EMAIL_USER, easyprint191@gmail.com
-          pass: process.env.EMAIL_PASS, nkvf wlte etwn avvl
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS,
         },
       });
 
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
           ? files.files
           : [files.files];
 
-        uploadedFiles.forEach(file => {
+        uploadedFiles.forEach((file) => {
           attachments.push({
             filename: file.originalFilename,
             path: file.filepath,
