@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EasyPrint Services • Pricing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html" class="active">Pricing</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Pricing -->
+  <section class="services">
+    <div class="container">
+      <h2>Affordable Pricing</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h3>Printing Black & White</h3>
+          <p>From <strong>₵1.00</strong> per page</p>
+        </div>
+        <div class="card">
+          <h3>Colored Printing</h3>
+          <p>From <strong>₵2.00</strong> per page</p>
+        </div>
+        <div class="card">
+          <h3>Comb Binding</h3>
+          <p>From <strong>₵5.00</strong> depending on the number of pages</p>
+        </div>
+        <div class="card">
+          <h3>Soft Binding</h3>
+          <p>From <strong>₵22.00</strong></p>
+        </div>
+        <div class="card">
+          <h3>Hard Cover Binding</h3>
+          <p>From <strong>₵65.00</strong></p>
+        </div>
+        <div class="card">
+          <h3>Passport Picture</h3>
+          <p>From <strong>₵20.00</strong> for 4 copies</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2025 EasyPrint Services. All Rights Reserved.</p>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" style="position:fixed; bottom:0; left:0; width:100%; 
+    background:#222; color:#fff; padding:1rem; display:flex; justify-content:space-between; 
+    align-items:center; z-index:1000; font-size:14px;">
+    <span>We use cookies to ensure you get the best experience on our website. 
+      <a href="privacy.html" style="color:#4CAF50; text-decoration:underline;">Learn more</a>
+    </span>
+    <button id="accept-cookies" style="background:#4CAF50; color:#fff; border:none; 
+      padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">Accept</button>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Cookie banner
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("accept-cookies");
+
+    if (document.cookie.includes("cookiesAccepted=true")) {
+      cookieBanner.style.display = "none";
+    }
+
+    acceptBtn.addEventListener("click", function() {
+      document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
+      cookieBanner.style.display = "none";
+    });
+  </script>
+</body>
+</html>
