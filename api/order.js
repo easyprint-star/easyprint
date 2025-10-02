@@ -4,7 +4,7 @@ import fs from "fs";
 
 export const config = {
   api: {
-    bodyParser: false, // let formidable handle file uploads
+    bodyParser: false, // disable default parser for file uploads
   },
 };
 
@@ -13,53 +13,49 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const form = formidable({ multiples: true, maxFileSize: 20 * 1024 * 1024 }); // 20 MB max
+  const form = formidable({ multiples: true });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
-      console.error("Formidable error:", err);
-      return res.status(500).json({ error: "File upload failed." });
+      return res.status(500).json({ error: "File upload error" });
     }
 
     try {
-      const customerName = fields.customer_name?.toString() || "Unknown Customer";
-
-      // Normalize files into an array
-      let fileArray = [];
-      if (Array.isArray(files["files[]"])) {
-        fileArray = files["files[]"];
-      } else if (files["files[]"]) {
-        fileArray = [files["files[]"]];
-      }
-
-      // Attachments
-      const attachments = fileArray.map((file) => ({
-        filename: file.originalFilename,
-        content: fs.createReadStream(file.filepath),
-      }));
-
-      // Nodemailer transporter (Gmail)
       const transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
         auth: {
-          user: process.env.EMAIL_USER, // easyprint191@gmail.com
-          pass: process.env.EMAIL_PASS, // nkvf wlte etwn avvl
+          user: process.env.EMAIL_USER, easyprint191@gmail.com
+          pass: process.env.EMAIL_PASS, nkvf wlte etwn avvl
         },
       });
 
+      const attachments = [];
+      if (files.files) {
+        const uploadedFiles = Array.isArray(files.files)
+          ? files.files
+          : [files.files];
+
+        uploadedFiles.forEach(file => {
+          attachments.push({
+            filename: file.originalFilename,
+            path: file.filepath,
+          });
+        });
+      }
+
       await transporter.sendMail({
         from: `"EasyPrint Orders" <${process.env.EMAIL_USER}>`,
-        to: process.env.EMAIL_RECEIVER || process.env.EMAIL_USER, // where you receive orders
-        subject: `📄 New Order from ${customerName}`,
-        text: `${customerName} has submitted an order with ${attachments.length} file(s).`,
+        to: process.env.EMAIL_RECEIVER || process.env.EMAIL_USER,
+        subject: "📦 New Order Submission",
+        text: `Order from ${fields.customer_name}`,
         attachments,
       });
 
-      return res.status(200).json({ success: "✅ Order submitted successfully!" });
-    } catch (e) {
-      console.error("Email send error:", e);
-      return res.status(500).json({ error: "Failed to send order email." });
+      res.status(200).json({ success: "✅ Order sent successfully!" });
+    } catch (error) {
+      res.status(500).json({ error: "Email sending failed: " + error.message });
     }
   });
 }
-
