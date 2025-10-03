@@ -12,18 +12,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Create Nodemailer transporter (Gmail)
+    // ✅ Use Gmail SMTP
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
-        user: process.env.EMAIL_USER, // easyprint191@gmail.com
-        pass: process.env.EMAIL_PASS, // nkvf wlte etwn avvl
+        user: process.env.EMAIL_USER, // Gmail
+        pass: process.env.EMAIL_PASS, // App Password (not normal Gmail password!)
       },
     });
 
+    // Verify connection first
+    await transporter.verify();
+
     await transporter.sendMail({
       from: `"EasyPrint Contact" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_RECEIVER || process.env.EMAIL_USER, // where you want to receive messages
+      to: process.env.EMAIL_RECEIVER || process.env.EMAIL_USER,
       subject: "📩 New Contact Form Message",
       html: `
         <h3>New Contact Message</h3>
@@ -35,8 +40,10 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ success: "✅ Message sent successfully!" });
   } catch (error) {
-    console.error("Email send error:", error);
-    return res.status(500).json({ error: "❌ Failed to send message." });
+    console.error("Email send error:", error.message, error);
+
+    return res.status(500).json({
+      error: `❌ Failed to send message. Details: ${error.message}`,
+    });
   }
 }
-

@@ -4,15 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EasyPrint Services • Contact</title>
+
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <!-- Header -->
   <header class="navbar">
     <div class="container nav-container">
-      <img src="img/Logo.png" alt="EasyPrint Logo" class="logo">
+      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+
+      <!-- ✅ Hamburger Button -->
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
       <nav>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -52,7 +64,7 @@
         <li><a href="services.html">Services</a></li>
         <li><a href="pricing.html">Pricing</a></li>
         <li><a href="order.html">Order</a></li>
-        <li><a href="contact.html">Contact</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
       </ul>
     </div>
   </footer>
@@ -68,56 +80,7 @@
       padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">Accept</button>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    // ✅ Contact Form AJAX
-    const contactForm = document.getElementById("contactForm");
-    const formResponse = document.getElementById("formResponse");
-
-    contactForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      formResponse.textContent = "⏳ Sending message...";
-
-      const formData = {
-        name: contactForm.name.value,
-        email: contactForm.email.value,
-        message: contactForm.message.value
-      };
-
-      try {
-        const res = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData)
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-          formResponse.style.color = "green";
-          formResponse.textContent = data.success;
-          contactForm.reset();
-        } else {
-          formResponse.style.color = "red";
-          formResponse.textContent = data.error || "❌ Something went wrong.";
-        }
-      } catch (err) {
-        formResponse.style.color = "red";
-        formResponse.textContent = "❌ Failed to send. Try again later.";
-      }
-    });
-
-    // ✅ Cookie banner
-    const cookieBanner = document.getElementById("cookie-banner");
-    const acceptBtn = document.getElementById("accept-cookies");
-
-    if (document.cookie.includes("cookiesAccepted=true")) {
-      cookieBanner.style.display = "none";
-    }
-
-    acceptBtn.addEventListener("click", function() {
-      document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
-      cookieBanner.style.display = "none";
-    });
-  </script>
+  <!-- ✅ External Script -->
+  <script src="script.js"></script>
 </body>
 </html>

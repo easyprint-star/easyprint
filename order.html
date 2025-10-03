@@ -12,7 +12,13 @@
   <!-- Header -->
   <header class="navbar">
     <div class="container nav-container">
-      <img src="img/Logo.png" alt="EasyPrint Logo" class="logo">
+      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+
+      <!-- ✅ Add hamburger button (same as homepage) -->
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
       <nav>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -73,78 +79,7 @@
       padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">Accept</button>
   </div>
 
-  <!-- JS -->
-  <script>
-    const fileInput = document.getElementById('file-upload');
-    const form = document.getElementById('uploadForm');
-    const fileError = document.getElementById('fileError');
-    const formResponse = document.getElementById('formResponse');
-
-    const MAX_FILE_SIZE = 10 * 1024 * 1024;   // 10 MB per file
-    const MAX_TOTAL_SIZE = 20 * 1024 * 1024;  // 20 MB total
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      fileError.textContent = '';
-      formResponse.textContent = '';
-
-      const files = fileInput.files;
-      let totalSize = 0;
-
-      if (files.length === 0) {
-        fileError.textContent = '⚠️ Please select at least one file.';
-        return;
-      }
-
-      for (let i = 0; i < files.length; i++) {
-        totalSize += files[i].size;
-        if (files[i].size > MAX_FILE_SIZE) {
-          fileError.textContent = `⚠️ "${files[i].name}" exceeds 10 MB limit.`;
-          return;
-        }
-      }
-
-      if (totalSize > MAX_TOTAL_SIZE) {
-        fileError.textContent = '⚠️ Total files exceed 20 MB limit.';
-        return;
-      }
-
-      const formData = new FormData(form);
-
-      try {
-        formResponse.textContent = "⏳ Uploading your files...";
-        const res = await fetch("/api/order", {
-          method: "POST",
-          body: formData
-        });
-
-        const data = await res.json();
-        if (res.ok) {
-          formResponse.style.color = "green";
-          formResponse.textContent = data.success;
-          form.reset();
-        } else {
-          formResponse.style.color = "red";
-          formResponse.textContent = data.error || "❌ Something went wrong.";
-        }
-      } catch (err) {
-        formResponse.style.color = "red";
-        formResponse.textContent = "❌ Failed to send. Try again later.";
-      }
-    });
-
-    // Cookie Banner
-    const cookieBanner = document.getElementById("cookie-banner");
-    const acceptBtn = document.getElementById("accept-cookies");
-
-    if (document.cookie.includes("cookiesAccepted=true")) {
-      cookieBanner.style.display = "none";
-    }
-
-    acceptBtn.addEventListener("click", function() {
-      document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
-      cookieBanner.style.display = "none";
-    });
-  </script>
-</body> 
+  <!-- ✅ Only call script.js -->
+  <script src="script.js"></script>
+</body>
 </html>

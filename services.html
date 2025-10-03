@@ -12,7 +12,13 @@
   <!-- Header -->
   <header class="navbar">
     <div class="container nav-container">
-      <img src="img/Logo.png" alt="EasyPrint Logo" class="logo">
+      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+
+      <!-- ✅ Add hamburger for mobile -->
+      <button class="menu-toggle" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
       <nav>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -88,19 +94,7 @@
       padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">Accept</button>
   </div>
 
-  <!-- Script -->
-  <script>
-    const cookieBanner = document.getElementById("cookie-banner");
-    const acceptBtn = document.getElementById("accept-cookies");
-
-    if (document.cookie.includes("cookiesAccepted=true")) {
-      cookieBanner.style.display = "none";
-    }
-
-    acceptBtn.addEventListener("click", function() {
-      document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
-      cookieBanner.style.display = "none";
-    });
-  </script>
+  <!-- ✅ Only call the shared script -->
+  <script src="script.js"></script>
 </body>
 </html>
