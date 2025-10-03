@@ -3,55 +3,102 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact Us - EasyPrint</title>
+  <title>EasyPrint Services • Contact</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
+  <!-- Header -->
   <header class="navbar">
-    <div class="nav-container">
-      <img src="images/logo.png" alt="EasyPrint Logo" class="logo">
-      <button class="menu-toggle" id="menu-toggle">☰</button>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="order.html">Order</a></li>
-        <li><a href="contact.html" class="active">Contact</a></li>
-      </ul>
+    <div class="container nav-container">
+      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+
+      <!-- Hamburger -->
+      <div class="hamburger">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="order.html">Order</a></li>
+          <li><a href="contact.html" class="active">Contact</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
-  <!-- Contact Form -->
-  <section class="container" style="padding: 3rem 1rem;">
-    <h2>Contact Us</h2>
-    <form id="contactForm">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" required>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Your Email</label>
-        <input type="email" id="email" name="email" required>
-      </div>
-
-      <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Send Message</button>
-    </form>
-    <p id="formResponse" style="margin-top:1rem;"></p>
+  <!-- Contact -->
+  <section class="services">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <form class="card" action="contact.php" method="post">
+        <input type="text" name="name" placeholder="Your Name" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;">
+        <input type="email" name="email" placeholder="Your Email" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;">
+        <textarea name="message" placeholder="Your Message" rows="5" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;"></textarea>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+      </form>
+    </div>
   </section>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 EasyPrint. All rights reserved.</p>
+    <div class="container footer-content">
+      <p>&copy; 2025 EasyPrint Services. All Rights Reserved.</p>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="order.html">Order</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
     </div>
   </footer>
 
+  <!-- Cookie Banner -->
+  <div id="cookie-banner" style="position:fixed; bottom:0; left:0; width:100%; 
+    background:#222; color:#fff; padding:1rem; display:flex; justify-content:space-between; 
+    align-items:center; z-index:1000; font-size:14px;">
+    <span>We use cookies to ensure you get the best experience on our website. 
+      <a href="privacy.html" style="color:#4CAF50; text-decoration:underline;">Learn more</a>
+    </span>
+    <button id="accept-cookies" style="background:#4CAF50; color:#fff; border:none; 
+      padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">Accept</button>
+  </div>
+
   <!-- Scripts -->
-  <script src="script.js"></script>
+  <script>
+    // Hamburger toggle
+    const hamburger = document.querySelector(".hamburger");
+    const navLinks = document.querySelector(".nav-links");
+
+    hamburger.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      hamburger.classList.toggle("active");
+    });
+
+    // Close menu when clicking a link
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        hamburger.classList.remove("active");
+      });
+    });
+
+    // Cookie banner
+    const cookieBanner = document.getElementById("cookie-banner");
+    const acceptBtn = document.getElementById("accept-cookies");
+
+    if (document.cookie.includes("cookiesAccepted=true")) {
+      cookieBanner.style.display = "none";
+    }
+
+    acceptBtn.addEventListener("click", function() {
+      document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
+      cookieBanner.style.display = "none";
+    });
+  </script>
 </body>
 </html>
