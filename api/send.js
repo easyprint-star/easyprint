@@ -1,78 +1,64 @@
-/**
- * /api/send.js
- * Vercel Serverless Function to send email via Resend.
- * Requires RESEND_API_KEY and TO_EMAIL as environment variables.
- */
- 
-module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    res.status(405).send('Method Not Allowed');
-    return;
-  }
-  try {
-    const body = req.body && Object.keys(req.body).length ? req.body : await getJson(req);
-    const { name, email, message, phone, ...rest } = body;
+// Hamburger toggle
+const hamburger = document.querySelector(".hamburger");
+const navLinks = document.querySelector(".nav-links");
 
-    if (!process.env.RESEND_API_KEY) {
-      res.status(500).send('RESEND_API_KEY not configured.');
-      return;
-    }
-    if (!process.env.TO_EMAIL) {
-      res.status(500).send('TO_EMAIL not configured.');
-      return;
-    }
+hamburger.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+  hamburger.classList.toggle("active");
+});
 
-    const html = `
-      <h2>New message from EasyPrintServices website</h2>
-      <p><strong>Name:</strong> ${escapeHtml(name || '—')}</p>
-      <p><strong>Email:</strong> ${escapeHtml(email || '—')}</p>
-      <p><strong>Phone:</strong> ${escapeHtml(phone || '—')}</p>
-      <p><strong>Message:</strong><br/>${escapeHtml(message || '—')}</p>
-      <pre>${escapeHtml(JSON.stringify(rest, null, 2))}</pre>
-    `;
+// Close menu when clicking a link
+document.querySelectorAll(".nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("active");
+    hamburger.classList.remove("active");
+  });
+});
 
-    const payload = {
-      from: 'easyprint191@gmail.com', // must be verified domain in Resend
-      to: process.env.TO_EMAIL.split(','), // allows multiple recipients separated by commas
-      subject: 'Website contact: ' + (name || 'New message'),
-      html: html
-    };
+// Cookie banner
+const cookieBanner = document.getElementById("cookie-banner");
+const acceptBtn = document.getElementById("accept-cookies");
 
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + process.env.RESEND_API_KEY
-      },
-      body: JSON.stringify(payload)
-    });
-
-    if (!r.ok) {
-      const txt = await r.text();
-      res.status(502).send('Resend API error: ' + txt);
-      return;
-    }
-    res.status(200).json({ ok: true });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error: ' + err.message);
-  }
-};
-
-function escapeHtml(s) {
-  return String(s || '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;');
+if (document.cookie.includes("cookiesAccepted=true")) {
+  cookieBanner.style.display = "none";
 }
 
-async function getJson(req){
-  return new Promise((resolve, reject) => {
-    let data='';
-    req.on('data', chunk => data += chunk);
-    req.on('end', ()=> {
-      try{ resolve(JSON.parse(data || '{}')) } catch(e){ resolve({}) }
-    });
-    req.on('error', reject);
+acceptBtn.addEventListener("click", function() {
+  document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
+  cookieBanner.style.display = "none";
+});
+
+// Contact form submit
+const contactForm = document.getElementById("contactForm");
+if (contactForm) {
+  contactForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const statusEl = document.getElementById("formStatus");
+    statusEl.innerText = "Sending...";
+
+    const formData = {
+      name: document.getElementById("name").value,
+      email: document.getElementById("email").value,
+      message: document.getElementById("message").value
+    };
+
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      if (res.ok) {
+        statusEl.innerText = "✅ Message sent successfully!";
+        contactForm.reset();
+      } else {
+        const txt = await res.text();
+        statusEl.innerText = "❌ Error: " + txt;
+      }
+    } catch (err) {
+      statusEl.innerText = "❌ Network error: " + err.message;
+    }
   });
 }

@@ -35,12 +35,13 @@
   <section class="services">
     <div class="container">
       <h2>Contact Us</h2>
-      <form class="card" action="contact.php" method="post">
-        <input type="text" name="name" placeholder="Your Name" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;">
-        <input type="email" name="email" placeholder="Your Email" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;">
-        <textarea name="message" placeholder="Your Message" rows="5" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;"></textarea>
+      <form id="contactForm" class="card">
+        <input type="text" name="name" id="name" placeholder="Your Name" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;">
+        <input type="email" name="email" id="email" placeholder="Your Email" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;">
+        <textarea name="message" id="message" placeholder="Your Message" rows="5" required style="margin-bottom:1rem; padding:0.7rem; width:100%; border-radius:0.5rem; border:1px solid #ddd;"></textarea>
         <button type="submit" class="btn btn-primary">Send Message</button>
       </form>
+      <div id="formStatus" style="margin-top:1rem; font-weight:600;"></div>
     </div>
   </section>
 
@@ -69,36 +70,6 @@
   </div>
 
   <!-- Scripts -->
-  <script>
-    // Hamburger toggle
-    const hamburger = document.querySelector(".hamburger");
-    const navLinks = document.querySelector(".nav-links");
-
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-      hamburger.classList.toggle("active");
-    });
-
-    // Close menu when clicking a link
-    document.querySelectorAll(".nav-links a").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-        hamburger.classList.remove("active");
-      });
-    });
-
-    // Cookie banner
-    const cookieBanner = document.getElementById("cookie-banner");
-    const acceptBtn = document.getElementById("accept-cookies");
-
-    if (document.cookie.includes("cookiesAccepted=true")) {
-      cookieBanner.style.display = "none";
-    }
-
-    acceptBtn.addEventListener("click", function() {
-      document.cookie = "cookiesAccepted=true; max-age=" + 60*60*24*365 + "; path=/";
-      cookieBanner.style.display = "none";
-    });
-  </script>
+  <script src="js/script.js"></script>
 </body>
 </html>
