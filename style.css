@@ -21,7 +21,7 @@ body {
 /* Navbar */
 .navbar {
   background: #fff;
-  padding: 0.8rem 0; /* slightly reduced padding so logo fits better */
+  padding: 0.8rem 0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
@@ -34,21 +34,20 @@ body {
   align-items: center;
 }
 
-/* Bigger logo but aligned */
+/* Logo */
 .logo {
-  height: 180px;   /* adjust as needed */
+  height: 180px;
   width: auto;
   display: block;
 }
 
-/* Nav links */
+/* Nav links (desktop default) */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 1.5rem;
-  align-items: center; /* keeps links vertically aligned with logo */
+  align-items: center;
 }
-
 
 .nav-links a {
   text-decoration: none;
@@ -59,7 +58,7 @@ body {
 
 .nav-links a:hover,
 .nav-links a.active {
-  color: #5b21b6; /* purple highlight */
+  color: #5b21b6;
 }
 
 /* Hero */
@@ -172,38 +171,12 @@ body {
   color: #a78bfa;
 }
 
-/* Responsive */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-  .nav-links {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
-  }
-}
-
-/* Hamburger button */
-.menu-toggle {
-  display: none;
-  font-size: 1.8rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #333;
-}
-
-/* Mobile menu styles */
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-    z-index: 1100; /* keeps button above menu */
-  }
-
+  /* Hide nav links until activated */
   .nav-links {
     position: absolute;
-    top: 70px; /* just below navbar */
+    top: 70px; 
     right: 0;
     background: #fff;
     flex-direction: column;
@@ -212,16 +185,32 @@ body {
     padding: 1.5rem;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 
-    /* Start hidden (slide effect) */
     transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
 
+  /* Show menu when active */
   .nav-links.active {
     transform: translateX(0);
     opacity: 1;
     pointer-events: auto;
+  }
+
+  /* Hamburger visible */
+  .menu-toggle {
+    display: block;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    z-index: 1100; 
+  }
+
+  /* Hide desktop nav */
+  .nav-links {
+    display: flex; /* still flex, but hidden by transform above */
   }
 }
