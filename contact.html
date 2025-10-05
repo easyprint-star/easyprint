@@ -12,12 +12,12 @@
   <!-- Header -->
   <header class="navbar">
     <div class="container nav-container">
-      <img src="img/logo.png" alt="EasyPrint Logo" class="logo">
+      <div class="site-title">Easy Print Services</div>
 
-      <!-- Hamburger -->
-      <div class="hamburger">
+      <!-- Hamburger Button -->
+      <button class="menu-toggle" aria-label="Toggle Menu">
         <i class="fa-solid fa-bars"></i>
-      </div>
+      </button>
 
       <nav>
         <ul class="nav-links">
@@ -58,17 +58,37 @@
     </div>
   </footer>
 
-  <!-- Cookie Banner -->
-  <div id="cookie-banner" style="position:fixed; bottom:0; left:0; width:100%; 
-    background:#222; color:#fff; padding:1rem; display:flex; justify-content:space-between; 
-    align-items:center; z-index:1000; font-size:14px;">
-    <span>We use cookies to ensure you get the best experience on our website. 
-      <a href="privacy.html" style="color:#4CAF50; text-decoration:underline;">Learn more</a>
-    </span>
-    <button id="accept-cookies" style="background:#4CAF50; color:#fff; border:none; 
-      padding:0.5rem 1rem; border-radius:5px; cursor:pointer;">Accept</button>
-  </div>
-
   <!-- Scripts -->
+  <script>
+    // Hamburger menu
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+
+    // Contact form submission (placeholder logic)
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formStatus.textContent = "Sending...";
+      try {
+        // TODO: replace with actual Resend API call
+        await new Promise(r => setTimeout(r, 1000)); // simulate sending
+        formStatus.textContent = "Message sent successfully!";
+        contactForm.reset();
+      } catch {
+        formStatus.textContent = "Error sending message. Please try again.";
+      }
+    });
+  </script>
 </body>
 </html>
